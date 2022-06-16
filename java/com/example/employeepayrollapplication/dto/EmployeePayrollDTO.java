@@ -1,6 +1,6 @@
 package com.example.employeepayrollapplication.dto;
 
-/* EmployeePayrollDto is data transfer object sent to user and received from user */
+/* EmployeePayrollDto class is (DTO) data transfer object sent to user and received from user */
 public class EmployeePayrollDTO {
     public String name;
     public long salary;
