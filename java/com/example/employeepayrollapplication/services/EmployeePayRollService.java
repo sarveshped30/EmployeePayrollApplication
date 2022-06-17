@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/* service layer contains classes which has business logic for curd operations */
 @Service
 public class EmployeePayRollService implements IEmployeePayrollService{
 
     List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
+
     @Override
     public List<EmployeePayrollData> getEmployeePayRollData() {
-        employeePayrollDataList.add(new EmployeePayrollData(1, new EmployeePayrollDTO("Sarvesh", 40000)));
-        employeePayrollDataList.add(new EmployeePayrollData(2, new EmployeePayrollDTO("Chaitanya", 45000)));
         return employeePayrollDataList;
     }
 
@@ -25,7 +25,7 @@ public class EmployeePayRollService implements IEmployeePayrollService{
 
     @Override
     public EmployeePayrollData addEmployeePayRollData(EmployeePayrollDTO employeePayrollDTO) {
-        EmployeePayrollData employeePayrollData = new EmployeePayrollData(3, employeePayrollDTO);
+        EmployeePayrollData employeePayrollData = new EmployeePayrollData(employeePayrollDataList.size()+1, employeePayrollDTO);
         employeePayrollDataList.add(employeePayrollData);
         return employeePayrollData;
     }
@@ -37,11 +37,11 @@ public class EmployeePayRollService implements IEmployeePayrollService{
 
     @Override
     public EmployeePayrollData updateEmployeePayRollData(int empId, EmployeePayrollDTO employeePayrollDTO) {
-        for (EmployeePayrollData empdata : employeePayrollDataList) {
-                if(empdata.getEmployeeId() == empId) {
-                    empdata.setName(employeePayrollDTO.name);
-                    empdata.setSalary(employeePayrollDTO.salary);
-                    return empdata;
+        for (EmployeePayrollData empData : employeePayrollDataList) {
+                if(empData.getEmployeeId() == empId) {
+                    empData.setName(employeePayrollDTO.name);
+                    empData.setSalary(employeePayrollDTO.salary);
+                    return empData;
                 }
         }
         return null;
