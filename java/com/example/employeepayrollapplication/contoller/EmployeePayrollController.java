@@ -2,6 +2,7 @@ package com.example.employeepayrollapplication.contoller;
 
 import com.example.employeepayrollapplication.dto.EmployeePayrollDTO;
 import com.example.employeepayrollapplication.dto.ResponseDTO;
+import com.example.employeepayrollapplication.exception.EmployeeNotFoundException;
 import com.example.employeepayrollapplication.model.EmployeePayrollData;
 import com.example.employeepayrollapplication.services.IEmployeePayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class EmployeePayrollController {
 
     /* Getting data from server */
     @GetMapping("/get/{empId}")
-    public ResponseEntity<ResponseDTO> getEmployeePayrollDataById(@PathVariable("empId") int empId) {
-        Optional<EmployeePayrollData> employeePayrollData = employeePayrollService.getEmployeePayRollDataById(empId);
+    public ResponseEntity<ResponseDTO> getEmployeePayrollDataById(@PathVariable("empId") int empId) throws EmployeeNotFoundException {
+        EmployeePayrollData employeePayrollData = employeePayrollService.getEmployeePayRollDataById(empId);
         ResponseDTO responseDTO = new ResponseDTO("Get employee data by Id success", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
@@ -55,7 +56,7 @@ public class EmployeePayrollController {
 
     /* Deleting data from server */
     @DeleteMapping("/delete/{empId}")
-    public ResponseEntity<ResponseDTO> deleteEmployeePayrollDataById(@PathVariable("empId") int empId) {
+    public ResponseEntity<ResponseDTO> deleteEmployeePayrollDataById(@PathVariable("empId") int empId) throws EmployeeNotFoundException {
         employeePayrollService.deleteEmployeePayRollDataById(empId);
         ResponseDTO responseDTO = new ResponseDTO("Deleted data successfully", "Deleted by id: " + empId);
         return new ResponseEntity<>(responseDTO , HttpStatus.OK);
@@ -63,7 +64,7 @@ public class EmployeePayrollController {
 
     /* Updating data to server */
     @PutMapping("/update/{empId}")
-    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId, @RequestBody @Valid EmployeePayrollDTO employeePayrollDTO) {
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId, @RequestBody @Valid EmployeePayrollDTO employeePayrollDTO) throws EmployeeNotFoundException {
         EmployeePayrollData employeePayrollData = employeePayrollService.updateEmployeePayRollData(empId, employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Updated data successfully", employeePayrollData);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);

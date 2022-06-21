@@ -5,10 +5,10 @@ import javax.validation.constraints.NotNull;
 /* EmployeePayrollDto class is (DTO) data transfer object sent to user and received from user */
 public class EmployeePayrollDTO {
 
-    @NotNull
+    @NotNull(message = "name should not be null")
     public String name;
 
-    @NotNull
+    @NotNull(message = "salary should not be null")
     public long salary;
 
     public EmployeePayrollDTO(String name, long salary) {
