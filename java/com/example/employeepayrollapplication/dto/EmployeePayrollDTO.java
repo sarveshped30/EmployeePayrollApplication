@@ -1,8 +1,14 @@
 package com.example.employeepayrollapplication.dto;
 
+import javax.validation.constraints.NotNull;
+
 /* EmployeePayrollDto class is (DTO) data transfer object sent to user and received from user */
 public class EmployeePayrollDTO {
+
+    @NotNull
     public String name;
+
+    @NotNull
     public long salary;
 
     public EmployeePayrollDTO(String name, long salary) {
