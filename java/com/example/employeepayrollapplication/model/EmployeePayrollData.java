@@ -2,8 +2,14 @@ package com.example.employeepayrollapplication.model;
 
 import com.example.employeepayrollapplication.dto.EmployeePayrollDTO;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /* Model object of employeePayrollData is stored in database */
+@Entity
 public class EmployeePayrollData {
+
+    @Id
     private int employeeId;
     private String name;
     private long salary;
@@ -12,6 +18,10 @@ public class EmployeePayrollData {
         this.employeeId = employeeId;
         this.name = employeePayrollDTO.name;
         this.salary = employeePayrollDTO.salary;
+    }
+
+    public EmployeePayrollData() {
+
     }
 
     public int getEmployeeId() {

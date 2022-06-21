@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /* Controller class with @RestController annotation which receives rest api calls
  * and provide response in form json or xml */
@@ -30,7 +31,7 @@ public class EmployeePayrollController {
     /* Getting data from server */
     @GetMapping("/get/{empId}")
     public ResponseEntity<ResponseDTO> getEmployeePayrollDataById(@PathVariable("empId") int empId) {
-        EmployeePayrollData employeePayrollData = employeePayrollService.getEmployeePayRollDataById(empId);
+        Optional<EmployeePayrollData> employeePayrollData = employeePayrollService.getEmployeePayRollDataById(empId);
         ResponseDTO responseDTO = new ResponseDTO("Get employee data by Id success", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
@@ -40,6 +41,14 @@ public class EmployeePayrollController {
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(@RequestBody EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = employeePayrollService.addEmployeePayRollData(employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Create employee payroll data  successfully", employeePayrollData);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/create/param")
+    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@RequestParam(value = "name") String name, @RequestParam(value = "salary") long salary) {
+        EmployeePayrollDTO employeePayrollDTO = new EmployeePayrollDTO(name, salary);
+        EmployeePayrollData employeePayrollData = employeePayrollService.addEmployeePayRollData(employeePayrollDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Created employee payroll data successfully using request params", employeePayrollData);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
